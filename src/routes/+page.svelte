@@ -1,25 +1,15 @@
 <script lang="ts">
-	const TRANSITION_TIME = 500;
+	import { NameForm } from '$lib/components';
+	import { TRANSITION_TIME } from '$lib/constants';
+
 	let opacity1 = 0;
 	let opacity2 = 100;
-	let opacity3 = 100;
 	let name = '';
 	let stage = 0;
 	let aeropress = false;
 	let v60 = false;
-	let showButton = true;
-	let formHeight = '160px';
 
 	setTimeout(() => (opacity1 = 100), 250);
-
-	function hideButton() {
-		opacity3 = 0;
-		formHeight = '102px';
-
-		setTimeout(() => {
-			showButton = false;
-		}, TRANSITION_TIME);
-	}
 
 	function nextStage() {
 		opacity2 = 0;
@@ -42,20 +32,7 @@
 			<h1 class="h1">Hello</h1>
 			<div class="space-y-5 transition-all ease-in duration-{TRANSITION_TIME} opacity-{opacity2}">
 				{#if stage === 0}
-					<form
-						on:submit={hideButton}
-						class="h-[{formHeight}] transition-all ease-in duration-{TRANSITION_TIME} w-full card p-4 text-token space-y-4"
-					>
-						<label class="label">
-							<span>What is your name?</span>
-							<input class="input" type="text" bind:value={name} required />
-						</label>
-						{#if showButton}
-							<div class="text-right opacity-{opacity3}">
-								<button type="submit" class="btn variant-outline">Submit</button>
-							</div>
-						{/if}
-					</form>
+					<NameForm {name} />
 				{:else if stage === 1}
 					<p>Welcome, {name}</p>
 					<p>Today, we're going to choose your coffee gear.</p>
